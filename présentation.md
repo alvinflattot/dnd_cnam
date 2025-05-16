@@ -4,5 +4,7 @@
 - RuleValidator (Chain of Responsibility) valide séquentiellement toutes les préconditions métier.
 
 ## v2.0
-- ReactionHandler (Observer/Publisher–Subscriber) déclenche automatiquement les réactions aux événements de combat.
 - CombatOrchestrator (Template Method) enchaîne et orchestre les phases de tour ; EventBus (Singleton) centralise la diffusion des événements.
+
+## v3.0
+- ReactionHandler (Observer/Publisher–Subscriber) déclenche automatiquement les réactions aux événements de combat.
