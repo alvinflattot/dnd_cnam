@@ -32,9 +32,6 @@ Cette documentation couvre exclusivement la logique métier des actions (combat 
     3. conditions d’état (avantage/désavantage, étourdi)
   - Renvoie liste d’erreurs métier si invalidité.
 
-- **ContextSnapshot**
-  - Patron **Memento** pour stocker/enregistrer l’état du `CombatContext` ou `ExplorationContext` passé en entrée et renvoyé en sortie, afin de permettre rollback si nécessaire.
-
 ---
 
 ### 1.2. Flux d’exécution d’une action
@@ -44,7 +41,6 @@ Cette documentation couvre exclusivement la logique métier des actions (combat 
 3. **Exécution** : `ActionFactory` crée l’instance, `ActionProcessor` appelle `execute()`, reçoit `ActionResult`.
 4. **Réactions** : les `eventsToTrigger` sont publiés à `ReactionHandler`.
 5. **Retour** : agrégation `TurnResult` ou `ActionResult` envoyé au caller.
-6. **Rollback** : en cas d’erreur fatale, restaurer `ContextSnapshot` antérieur.
 
 ---
 
@@ -52,7 +48,7 @@ Cette documentation couvre exclusivement la logique métier des actions (combat 
 
 ### 2.1. Objectif
 
-Fournir un microservice stateless en PHP (classe pure + DI) exposant l’API `performAction` et `resolveTurn` sur des contexts fournis, sans dés, DB, ni gestion de personnages.
+Fournir un microservice stateless en PHP (classes pures + DI) exposant l’API `performAction` et `resolveTurn` sur des contexts fournis, sans dés, DB, ni gestion de personnages.
 
 ### 2.2. Interfaces publiques
 
@@ -93,7 +89,7 @@ Fournir un microservice stateless en PHP (classe pure + DI) exposant l’API `pe
 - **Style** : PSR-12, SOLID
 - **Gestion des dépendances** : Composer, auto-wiring pour DI
 - **Tests** : PHPUnit, couverture > 90 % pour chaque module métier
-- **CI/CD** : pipeline GitLab/GitHub Actions déclenchant tests et static analysis (PHPStan)
+- **CI/CD** : pipeline GitLab/GitHub Actions (tests + PHPStan)
 
 ---
 
@@ -131,36 +127,29 @@ Chaque story exclut le lancer de dés, la persistance et les entités personnage
   - C1.2 : Mapper chaque type d’événement à une `ReactionAction` (Factory).
   - C1.3 : Tests de réaction à un `onMove` déclenchant opportunité.
 
-### Epic D – Snapshot et Rollback
+### Epic D – Documentation & Qualité
 
-**US-D1** : En tant que service, je veux pouvoir capturer l’état d’un contexte avant action et restaurer en cas d’erreur, afin de garantir l’atomicité.
+**US-D1** : En tant que mainteneur, je veux une documentation complète des classes et un schéma d’architecture, afin de faciliter l’intégration.
 - **Tâches :**
-  - D1.1 : Implémenter `ContextSnapshot` (Memento).
-  - D1.2 : Intégrer rollback dans `ActionProcessor`.
-  - D1.3 : Tests unitaires de restauration après exception.
+  - D1.1 : Rédiger UML de classes principales et séquences.
+  - D1.2 : Générer documentation PHPDoc + README.
 
-### Epic E – Documentation & Qualité
-
-**US-E1** : En tant que mainteneur, je veux une documentation complète des classes et un schéma d’architecture, afin de faciliter l’intégration.
+**US-D2** : En tant que responsable qualité, je veux une couverture de tests ≥ 90 % et analyse statique verte, pour assurer la robustesse.
 - **Tâches :**
-  - E1.1 : Rédiger UML de classes principales et séquences.
-  - E1.2 : Générer documentation PHPDoc + README.
-
-**US-E2** : En tant que responsable qualité, je veux une couverture de tests ≥ 90 % et analyse statique verte, pour assurer la robustesse.
-- **Tâches :**
-  - E2.1 : Configurer PHPStan et fixer les erreurs.
-  - E2.2 : Ajouter tests sur chaque module (Processor, Validator, ReactionHandler).
+  - D2.1 : Configurer PHPStan et fixer les erreurs.
+  - D2.2 : Ajouter tests sur chaque module (Processor, Validator, ReactionHandler).
 
 ---
 
 ## 4. Patrons de conception recommandés
 
-| Module             | Pattern(s)                   | Usage                                         |
-|--------------------|------------------------------|-----------------------------------------------|
-| ActionFactory      | Factory Method               | Instanciation polymorphe d’`Action`           |
-| ActionProcessor    | Strategy                     | Injection des comportements d’`execute()`     |
-| RuleValidator      | Chain of Responsibility      | Validation séquentielle des règles            |
-| ReactionHandler    | Observer / Pub-Sub           | Souscription et notification d’événements     |
-| CombatOrchestrator | Template Method              | Enchaînement standardisé des phases           |
-| ContextSnapshot    | Memento                      | Sauvegarde/restauration d’état                |
-| EventBus           | Singleton                    | Point unique de distribution d’événements     |
+| Module             | Pattern(s)                   | Usage                                     |
+|--------------------|------------------------------|-------------------------------------------|
+| ActionFactory      | Factory Method               | Instanciation polymorphe d’`Action`       |
+| ActionProcessor    | Strategy                     | Injection des comportements d’`execute()` |
+| RuleValidator      | Chain of Responsibility      | Validation séquentielle des règles        |
+| ReactionHandler    | Observer / Pub-Sub           | Souscription et notification d’événements |
+| CombatOrchestrator | Template Method              | Enchaînement standardisé des phases       |
+| EventBus           | Singleton                    | Point unique de distribution d’événements |
+
+*Fin de la version ajustée.*  
