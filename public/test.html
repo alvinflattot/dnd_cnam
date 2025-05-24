@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Actions D&D 5e (Stateless)</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+        fieldset { margin-bottom: 1.5rem; padding: 1rem; }
+        label { display: block; margin: .5rem 0 .2rem; }
+        input, textarea, button { width: 100%; padding: .4rem; box-sizing: border-box; }
+        pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; }
+        textarea { height: 12em; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<h1>Interface de test des actions</h1>
+
+<fieldset>
+    <legend>Action</legend>
+    <form id="action-form">
+        <label for="action-type">Type d'action</label>
+        <select id="action-type" name="action-type">
+            <option value="attack">attack</option>
+            <option value="move">move</option>
+            <option value="useItem">useItem</option>
+        </select>
+
+        <label for="action-actor">Objet Character (acteur)</label>
+        <textarea id="action-actor" name="actor">
+            {
+                "name": "Aragorn",
+                "hp": 35,
+                "armorClass": 16,
+                "inventory": {
+                    "hpPotion":1,
+                    "manaPotion":2
+                }
+            }
+        </textarea>
+
+        <label for="action-target">Objet Character (cible)</label>
+        <textarea id="action-target" name="target">
+            {
+                "name": "Orc",
+                "hp": 12,
+                "armorClass": 9
+            }
+        </textarea>
+
+        <label for="action-params">Params (roll, attack_mod, damage_roll, damage_mod ...)</label>
+        <textarea id="action-params" name="params">
+            {
+                "itemToUse": "hpPotion",
+                "roll": 12,
+                "attack_mod": 5,
+                "damage_roll": 6,
+                "damage_mod": 3
+            }
+        </textarea>
+
+        <button type="submit">Lancer Attack</button>
+    </form>
+    <pre id="c-result"></pre>
+</fieldset>
+
+<script>
+    async function postJSON(path, body) {
+        const res = await fetch(path, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(body)
+        });
+        return res.json();
+    }
+
+    document.getElementById('action-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        let actionType, actor, target, params;
+        try {
+            actionType  = document.getElementById('action-type').value;
+            console.log(actionType)
+            actor  = JSON.parse(e.target.actor.value);
+            console.log(actor)
+            target = JSON.parse(e.target.target.value);
+            console.log(target)
+            params = JSON.parse(e.target.params.value);
+            console.log(params)
+        } catch {
+            return alert('Un des JSON est invalide');
+        }
+        const payload = {
+            actionType,
+            actor,
+            target,
+            params
+        };
+        const json = await postJSON('/actions', payload);
+        document.getElementById('c-result').textContent = JSON.stringify(json, null, 2);
+    });
+</script>
+
+</body>
+</html>

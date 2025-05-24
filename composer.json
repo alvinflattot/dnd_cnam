@@ -11,5 +11,7 @@
             "email": "alvin.flattot@interstis.fr"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-http": "*"
+    }
 }
