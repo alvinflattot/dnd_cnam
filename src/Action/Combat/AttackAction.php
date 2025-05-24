@@ -17,7 +17,7 @@ class AttackAction implements ActionInterface
         }
 
         $total = $params['roll'] + $params['attack_mod'];
-        $hit = $total >= $target->ac;
+        $hit = $total >= $target->getArmorClass();
 
         if ($hit) {
             $dmg = $params['damage_roll'] + $params['damage_mod'];
