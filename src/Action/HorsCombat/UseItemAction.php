@@ -26,8 +26,8 @@ class UseItemAction implements ActionInterface
         return [
             'events' => [$evt->getMessage()],
             'result' => [
-                'usedItem'  => $itemToUse,
-                'inventory' => $actor->getInventory()
+                'actor' => $actor->toArray(),
+                'target' => $target->toArray(),
             ]
         ];
     }

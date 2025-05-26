@@ -6,26 +6,26 @@ use App\Action\ActionInterface;
 use App\Dispatcher\EventDispatcher;
 use App\Model\Character;
 use App\Model\Event;
-use InvalidArgumentException;
+use Exception;
 
 class AttackAction implements ActionInterface
 {
+    /**
+     * @throws Exception
+     */
     public function execute(Character $actor, ?Character $target, array $params): array
     {
-        if (!$target) {
-            throw new InvalidArgumentException("Cible requise pour une attaque");
-        }
 
-        $total = $params['roll'] + $params['attack_mod'];
+        $actorModifierBonus = $actor->getModifierBonus($params['weaponToUse']['statistic']);
+        $total = $params['attackRoll'] + $actorModifierBonus + $actor->getProficiencyBonus();
         $hit = $total >= $target->getArmorClass();
 
         if ($hit) {
-            $dmg = $params['damage_roll'] + $params['damage_mod'];
-            $msg = "{$actor->getName()} touche {$target->getName()} (jet {$total} vs CA {$target->getArmorClass()}) pour {$dmg} dégâts.";
-            $result = ['hit' => true, 'damage' => $dmg];
+            $dmg = $params['damageRoll'] + $actorModifierBonus;
+            $msg = "{$actor->getName()} touche {$target->getName()} (jet $total vs CA {$target->getArmorClass()}) pour $dmg dégâts.";
+            $target->setHp($target->getHp() - $dmg);
         } else {
-            $msg = "{$actor->getName()} rate {$target->getName()} (jet {$total} vs CA {$target->getArmorClass()})";
-            $result = ['hit' => false];
+            $msg = "{$actor->getName()} rate {$target->getName()} (jet $total vs CA {$target->getArmorClass()})";
         }
 
         $evt = new Event($msg);
@@ -33,7 +33,10 @@ class AttackAction implements ActionInterface
 
         return [
             'events' => [$evt->getMessage()],
-            'result' => $result
+            'result' => [
+                'actor' => $actor->toArray(),
+                'target' => $target->toArray(),
+            ]
         ];
     }
 }

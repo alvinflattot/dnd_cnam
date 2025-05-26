@@ -15,6 +15,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 $body   = json_decode(file_get_contents('php://input'), true) ?: [];
 
 try {
+    if ($method==='GET' && $path==='/') {
+        http_response_code(302);
+        header('Location: /test.html');
+        exit;
+    }
     if ($method==='POST' && $path==='/actions') {
         ActionController::execute($body);
     } else {
