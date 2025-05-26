@@ -3,9 +3,7 @@
 namespace App\Action\Combat;
 
 use App\Action\ActionInterface;
-use App\Dispatcher\EventDispatcher;
 use App\Model\Character;
-use App\Model\Event;
 use Exception;
 
 class AttackAction implements ActionInterface
@@ -28,11 +26,8 @@ class AttackAction implements ActionInterface
             $msg = "{$actor->getName()} rate {$target->getName()} (jet $total vs CA {$target->getArmorClass()})";
         }
 
-        $evt = new Event($msg);
-        EventDispatcher::getInstance()->dispatch($evt);
-
         return [
-            'events' => [$evt->getMessage()],
+            'events' => [$msg],
             'result' => [
                 'actor' => $actor->toArray(),
                 'target' => $target->toArray(),

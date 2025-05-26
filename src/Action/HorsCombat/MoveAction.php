@@ -3,9 +3,7 @@
 namespace App\Action\HorsCombat;
 
 use App\Action\ActionInterface;
-use App\Dispatcher\EventDispatcher;
 use App\Model\Character;
-use App\Model\Event;
 
 class MoveAction implements ActionInterface
 {
@@ -15,11 +13,8 @@ class MoveAction implements ActionInterface
         $to = $from + $params['distance'];
         $msg = "{$actor->getName()} se déplace de $from à $to.";
 
-        $evt = new Event($msg);
-        EventDispatcher::getInstance()->dispatch($evt);
-
         return [
-            'events' => [$evt->getMessage()],
+            'events' => [$msg],
             'result' => [
                 'actor' => $actor->toArray(),
                 'target' => $target->toArray(),

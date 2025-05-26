@@ -3,9 +3,7 @@
 namespace App\Action\HorsCombat;
 
 use App\Action\ActionInterface;
-use App\Dispatcher\EventDispatcher;
 use App\Model\Character;
-use App\Model\Event;
 use Exception;
 
 class UseItemAction implements ActionInterface
@@ -20,11 +18,8 @@ class UseItemAction implements ActionInterface
 
         $actor->consumeItem($itemToUse);
 
-        $evt = new Event($msg);
-        EventDispatcher::getInstance()->dispatch($evt);
-
         return [
-            'events' => [$evt->getMessage()],
+            'events' => [$msg],
             'result' => [
                 'actor' => $actor->toArray(),
                 'target' => $target->toArray(),

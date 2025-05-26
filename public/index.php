@@ -2,32 +2,32 @@
 declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Dispatcher\EventDispatcher;
-use App\Observer\LoggingListener;
 use App\Controller\ActionController;
+use App\Dispatcher\EventDispatcher;
+use App\Observer\FileLoggerListener;
 use App\Util\ResponseUtil;
 
-EventDispatcher::getInstance()->addListener(new LoggingListener());
+EventDispatcher::getInstance()->addListener(new FileLoggerListener());
 
 // Routing minimal
-$path   = $_SERVER['PATH_INFO'] ?? '/';
+$path = $_SERVER['PATH_INFO'] ?? '/';
 $method = $_SERVER['REQUEST_METHOD'];
-$body   = json_decode(file_get_contents('php://input'), true) ?: [];
+$body = json_decode(file_get_contents('php://input'), true) ?: [];
 
 try {
-    if ($method==='GET' && $path==='/') {
+    if ($method === 'GET' && $path === '/') {
         http_response_code(302);
         header('Location: /test.html');
         exit;
     }
-    if ($method==='POST' && $path==='/actions') {
+    if ($method === 'POST' && $path === '/actions') {
         ActionController::execute($body);
     } else {
-        ResponseUtil::json(['error'=>'Route not found'], 404);
+        ResponseUtil::json(['error' => 'Route not found'], 404);
     }
-} catch (\Throwable $e) {
+} catch (Throwable $e) {
     ResponseUtil::json([
-        'error'=>$e->getMessage(),
+        'error' => $e->getMessage(),
         'trace' => $e->getTrace()
     ], 400);
 }
