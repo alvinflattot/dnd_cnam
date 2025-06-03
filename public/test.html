@@ -29,34 +29,7 @@
         </select>
 
         <label for="action-actor">Objet Character (acteur)</label>
-        <textarea id="action-actor" name="actor">
-{
-    "name": "Aragorn",
-    "hp": 7,
-    "hpMax": 12,
-    "armorClass": 15,
-    "level": 1,
-    "class": "thief",
-    "race": "Human",
-    "inventory": {
-        "hpPotion": 1,
-        "manaPotion": 2,
-        "rapier": 1
-    },
-    "statistics": {
-        "strength": 16,
-        "dexterity": 18,
-        "constitution": 14,
-        "intelligence": 10,
-        "wisdom": 12,
-        "charisma": 8
-    },
-    "skills": [
-        "Sneak Attack"
-    ]
-}
-
-        </textarea>
+        <textarea id="action-actor" name="actor"></textarea>
 
         <label for="action-target">Objet Character (cible)</label>
         <textarea id="action-target" name="target">
@@ -106,7 +79,28 @@
     </form>
     <pre id="action-result"></pre>
 </fieldset>
+<script>
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const res = await fetch('/src/Characters/Users/Aragorn.json');
+            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            const data = await res.json();
+            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+        } catch (e) {
+            alert('Erreur lors du chargement de Aragorn.json : ' + e.message);
+        }
+    });
 
+    document.getElementById('action-type').addEventListener('change', function() {
+        if (this.value === 'reposCourt') {
+            document.getElementById('action-params').value = JSON.stringify({ mode: 'court' }, null, 2);
+            document.getElementById('action-target').value = document.getElementById('action-actor').value;
+        } else if (this.value === 'reposLong') {
+            document.getElementById('action-params').value = JSON.stringify({ mode: 'long' }, null, 2);
+            document.getElementById('action-target').value = document.getElementById('action-actor').value;
+        }
+    });
+</script>
 <script>
     const resultDiv = document.getElementById('action-result');
 

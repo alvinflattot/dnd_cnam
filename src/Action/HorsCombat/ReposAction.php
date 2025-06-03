@@ -20,6 +20,7 @@ class ReposAction implements ActionInterface
 
         if ($mode === 'court') {
             $staminaGain = 5;
+            $
             $actor->setStamina(min($actor->getStaminaMax(), $actor->getStamina() + $staminaGain));
             $events[] = "{$actor->getName()} effectue un repos court et récupère $staminaGain points de stamina.";
         } elseif ($mode === 'long') {

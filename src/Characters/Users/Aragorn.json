@@ -1,0 +1,25 @@
+{
+  "name": "Aragorn",
+  "hp": 7,
+  "hpMax": 12,
+  "armorClass": 15,
+  "level": 1,
+  "class": "thief",
+  "race": "Human",
+  "inventory": {
+    "hpPotion": 1,
+    "manaPotion": 2,
+    "rapier": 1
+  },
+  "statistics": {
+    "strength": 16,
+    "dexterity": 18,
+    "constitution": 14,
+    "intelligence": 10,
+    "wisdom": 12,
+    "charisma": 8
+  },
+  "skills": [
+    "Sneak Attack"
+  ]
+}
