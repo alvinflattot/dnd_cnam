@@ -11,6 +11,20 @@
     "manaPotion": 2,
     "rapier": 1
   },
+  "spells" : {
+    "fireball": {
+      "level": 1,
+      "damage": 8,
+      "remainingUse": 5,
+      "maxUse": 5
+    },
+    "heal": {
+      "level": 1,
+      "healing": 10,
+      "remainingUse": 3,
+      "maxUse": 3
+    }
+  },
   "statistics": {
     "strength": 16,
     "dexterity": 18,
