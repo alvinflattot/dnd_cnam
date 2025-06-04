@@ -13,12 +13,20 @@ class SearchTreasure implements ActionInterface
      */
     public function execute(Character $actor, ?Character $target, array $params): array
     {
-        $location = $params['location'];
+        $location      = $params['location'];
+        $listOfAwards  = $params['listOfAwards'];
+        $randomIndex   = array_rand($listOfAwards);
+        $award         = $listOfAwards[$randomIndex];
 
-        $listOfAwards = $params['listOfAwards'];
-        $randomIndex = array_rand($listOfAwards);
+        $resultDice = 10;
 
-        $msg = "Le joueur fouille dans « $location », il obtient : « {$listOfAwards[$randomIndex]} »";
+        if ($resultDice >= $award['minimumDice']) {
+            $msg = "Le joueur fouille dans « $location », il obtient : « {$award['name']} »";
+        }
+        else {
+            $msg = "Le joueur fouille dans « $location », mais ne trouve rien.";
+        }
+
 
         return [
             'events' => [$msg],

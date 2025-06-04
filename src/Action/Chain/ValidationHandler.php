@@ -64,7 +64,6 @@ class ValidationHandler extends AbstractActionHandler
             if (!is_string($location) || $location === '') {
                 throw new Exception('Localisation non trouvé.');
             }
-
         }
 
         return parent::handle($actionType, $actor, $target, $context);
