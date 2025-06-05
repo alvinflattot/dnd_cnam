@@ -13,7 +13,7 @@ class SearchTreasure implements ActionInterface
      */
     public function execute(Character $actor, ?Character $target, array $params): array
     {
-        $location      = $params['location'];
+        $location = $params['location'];
         $awardDifficulty = $params['awardDifficulty'];
         $listOfAwards  = $params['listOfAwards'] ?? [];
         $randomTreasureValue  = rand(1, 100);
@@ -36,9 +36,17 @@ class SearchTreasure implements ActionInterface
         }
 
         if ($treasureRoll >= $awardDifficulty) {
-            $msg = "Le joueur fouille dans « $location », il obtient : « {$listOfAwards} »"; //TODO: boucler pour afficher chaque récompense
-        }
-        else {
+            $msg = "Le joueur fouille dans « $location », il obtient : ";
+            $rewards = [];
+
+            foreach ($listOfAwards as $award) {
+                $quantity = $award['quantity'] ?? 1;
+                $name = $award['name'];
+                $rewards[] = "« {$quantity} {$name} »";
+            }
+
+            $msg .= implode(', ', $rewards);
+        } else {
             $msg = "Le joueur fouille dans « $location », mais ne trouve rien.";
         }
 
