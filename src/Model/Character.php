@@ -178,7 +178,6 @@ class Character
     }
 
 
-
     /**
      *
      * @param string $itemToConsume
