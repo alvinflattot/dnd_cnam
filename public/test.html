@@ -35,8 +35,8 @@
         <textarea id="action-target" name="target">
 {
     "name": "goblin",
-    "hp": 7,
     "hpMax": 12,
+    "hp": 7,
     "armorClass": 15,
     "level": 1,
     "class": "thief",
@@ -146,8 +146,8 @@
             .then(data => {
                 console.log('Réponse JSON du serveur:', data);
                 resultDiv.textContent = JSON.stringify(data.events, null, 2);
-                document.getElementById('action-actor').textContent = JSON.stringify(data.result.actor, null, 2);
-                document.getElementById('action-target').textContent = JSON.stringify(data.result.target, null, 2);
+                document.getElementById('action-actor').value = JSON.stringify(data.result.actor, null, 2);
+                document.getElementById('action-target').value = JSON.stringify(data.result.target, null, 2);
                 resultDiv.style.color = "green";
             })
             .catch(err => {
