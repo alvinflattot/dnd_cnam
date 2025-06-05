@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\ActionController;
 use App\Dispatcher\EventDispatcher;
@@ -17,7 +17,7 @@ $body = json_decode(file_get_contents('php://input'), true) ?: [];
 try {
     if ($method === 'GET' && $path === '/') {
         http_response_code(302);
-        header('Location: /test.html');
+        header('Location: /public/test.html');
         exit;
     }
     if ($method === 'POST' && $path === '/actions') {
