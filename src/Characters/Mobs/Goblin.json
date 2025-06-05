@@ -1,5 +1,5 @@
 {
-  "name": "Aragorn",
+  "name": "goblin",
   "hp": 7,
   "hpMax": 12,
   "armorClass": 15,
@@ -10,20 +10,6 @@
     "hpPotion": 1,
     "manaPotion": 2,
     "rapier": 1
-  },
-  "spells" : {
-    "fireball": {
-      "level": 1,
-      "damage": 8,
-      "remainingUse": 5,
-      "maxUse": 5
-    },
-    "heal": {
-      "level": 1,
-      "healing": 10,
-      "remainingUse": 3,
-      "maxUse": 3
-    }
   },
   "statistics": {
     "strength": 16,
