@@ -24,14 +24,14 @@ class SearchTreasure implements ActionInterface
             $listOfAwards[] = match (true) {
                 $randomTreasureValue <= 30 => ['name' => Dice::totalRolls(Dice::roll(6, 2)) . "pièces d’argent (pa)"],
                 $randomTreasureValue <= 60 => ['name' => Dice::totalRolls(Dice::roll(6, 4)) . "pièces d’argent (pa)"],
-                $randomTreasureValue <= 70 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . " pièces d’or (po)"],
-                $randomTreasureValue <= 75 => ['name' => Dice::totalRolls(Dice::roll(6, 4)) . " po + une gemme commune (valeur 10 po)"],
-                $randomTreasureValue <= 80 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . " po + un objet d'art (valeur 25 po)"],
-                $randomTreasureValue <= 85 => ['name' => Dice::totalRolls(Dice::roll(6, 2)) . " po + un parchemin de sort de niveau 1 (ex : Détection de la magie)"],
-                $randomTreasureValue <= 90 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . " po + une potion de soin"],
-                $randomTreasureValue <= 95 => ['name' => Dice::totalRolls(Dice::roll(6, 1)) . " po + 1 objet magique mineur (Table A*)"],
-                $randomTreasureValue <= 99 => ['name' => Dice::totalRolls(Dice::roll(6, 1)) . " po + 1 objet magique inhabituel (Table B*)"],
-                $randomTreasureValue <= 100 => ['name' => "Trésor spécial : " . Dice::totalRolls(Dice::roll(6, 1)) . " po + objet unique, mystérieux ou lié à une quête"],
+                $randomTreasureValue <= 70 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . "pièces d’or (po)"],
+                $randomTreasureValue <= 75 => ['name' => Dice::totalRolls(Dice::roll(6, 4)) . "po + une gemme commune (valeur 10 po)"],
+                $randomTreasureValue <= 80 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . "po + un objet d'art (valeur 25 po)"],
+                $randomTreasureValue <= 85 => ['name' => Dice::totalRolls(Dice::roll(6, 2)) . "po + un parchemin de sort de niveau 1 (ex : Détection de la magie)"],
+                $randomTreasureValue <= 90 => ['name' => Dice::totalRolls(Dice::roll(6, 3)) . "po + une potion de soin"],
+                $randomTreasureValue <= 95 => ['name' => Dice::totalRolls(Dice::roll(6, 1)) . "po + 1 objet magique mineur (Table A*)"],
+                $randomTreasureValue <= 99 => ['name' => Dice::totalRolls(Dice::roll(6, 1)) . "po + 1 objet magique inhabituel (Table B*)"],
+                $randomTreasureValue <= 100 => ['name' => "Trésor spécial : " . Dice::totalRolls(Dice::roll(6, 1)) . "po + objet unique, mystérieux ou lié à une quête"],
                 default => [],
             };
         }
@@ -44,6 +44,8 @@ class SearchTreasure implements ActionInterface
                 $quantity = $award['quantity'] ?? null;
                 $name = $award['name'];
                 $rewards[] = "« {$quantity} {$name} »";
+
+                $actor->ajouterObjetInventaire($name, $quantity);
             }
 
             $msg .= implode(', ', $rewards);
