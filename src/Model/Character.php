@@ -197,6 +197,14 @@ class Character
         $this->setInventory($inventory);
     }
 
+    function ajouterObjetInventaire(string $nomObjet, int $quantite = 1): void {
+        if (isset($this->inventaire[$nomObjet])) {
+            $this->inventaire[$nomObjet] += $quantite;
+        } else {
+            $this->inventaire[$nomObjet] = $quantite;
+        }
+    }
+
     /**
      * Calcule le modificateur de caractéristique
      * @throws Exception
