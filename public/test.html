@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <title>Test Actions D&D 5e (Stateless)</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
-        fieldset { margin-bottom: 1.5rem; padding: 1rem; }
-        label { display: block; margin: .5rem 0 .2rem; }
-        input, textarea, button { width: 100%; padding: .4rem; box-sizing: border-box; }
-        pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; }
-        textarea { height: 12em; font-family: monospace; }
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        fieldset {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+        }
+
+        label {
+            display: block;
+            margin: .5rem 0 .2rem;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: .4rem;
+            box-sizing: border-box;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        textarea {
+            height: 12em;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
@@ -24,6 +50,7 @@
             <option value="attack">attack</option>
             <option value="move">move</option>
             <option value="useItem">useItem</option>
+            <option value="SearchTreasure">SearchTreasure</option>
             <option value="reposCourt">repos court</option>
             <option value="reposLong">repos long</option>
         </select>
@@ -65,12 +92,20 @@
 {
     "itemToUse": "hpPotion",
     "weaponToUse": {
-        "name" : "rapier",
+        "name": "rapier",
         "statistic": "dexterity",
         "damage": 3
     },
     "attackRoll": 12,
-    "damageRoll": 6
+    "damageRoll": 6,
+    "location": "Forest",
+    "awardDifficulty": 20,
+    "treasureRoll": 30,
+    "listOfAwards": [
+        { "name": "Boost Strength",     "quantity": 15 },
+        { "name": "Gain Experience",    "quantity": 8  },
+        { "name": "Find Gold",          "quantity": 12 }
+    ]
 }
 
         </textarea>
@@ -110,9 +145,9 @@
         resultDiv.textContent = "";
 
         try {
-            actionType  = document.getElementById('action-type').value;
+            actionType = document.getElementById('action-type').value;
             console.log(actionType)
-            actor  = JSON.parse(e.target.actor.value);
+            actor = JSON.parse(e.target.actor.value);
             console.log(actor)
             target = JSON.parse(e.target.target.value);
             console.log(target)

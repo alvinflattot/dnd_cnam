@@ -58,6 +58,14 @@ class ValidationHandler extends AbstractActionHandler
             }
         }
 
+        // Utilisation d'une fouille
+        if($actionType === 'SearchTreasure') {
+            $location = $context['location'] ?? null;
+            if (!is_string($location) || $location === '') {
+                throw new Exception('Localisation non trouvé.');
+            }
+        }
+
         return parent::handle($actionType, $actor, $target, $context);
     }
 }

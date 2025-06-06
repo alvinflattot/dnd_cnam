@@ -4,6 +4,7 @@ namespace App\Factory;
 use App\Action\ActionInterface;
 use App\Action\HorsCombat\MoveAction;
 use App\Action\Combat\AttackAction;
+use App\Action\HorsCombat\SearchTreasure;
 use App\Action\HorsCombat\UseItemAction;
 use InvalidArgumentException;
 
@@ -15,6 +16,7 @@ class ActionFactory
             'move'   => new MoveAction(),
             'attack' => new AttackAction(),
             'useItem' => new UseItemAction(),
+            'SearchTreasure'=> new SearchTreasure(),
             default  => throw new InvalidArgumentException("Action inconnue \"$type\"")
         };
     }
