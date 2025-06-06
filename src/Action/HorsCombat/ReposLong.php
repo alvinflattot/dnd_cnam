@@ -2,13 +2,14 @@
 
 namespace App\Action\HorsCombat;
 
+use App\Action\ActionInterface;
 use App\Model\Character;
 
-class ReposLongAction implements ReposActionInterface
+class ReposLong implements ActionInterface
 {
     public function execute(Character $actor, ?Character $target, array $params): array
     {
-        $staminaGain = $actor->getStaminaMax();
+        $staminaGain = $actor->getStaminaMax(); //TODO: implémenter les attributs et méthode lié a la stamina
         $hpGain = $actor->getHpMax();
         $events = [];
 
@@ -17,7 +18,7 @@ class ReposLongAction implements ReposActionInterface
 
         // Réinitialisation des sorts
         $spells = $actor->getSpells();
-        foreach ($spells as $name => &$spell) {
+        foreach ($spells as $spell) {
             if (isset($spell['maxUse'])) {
                 $spell['remainingUse'] = $spell['maxUse'];
             }
@@ -30,7 +31,7 @@ class ReposLongAction implements ReposActionInterface
             'events' => $events,
             'result' => [
                 'actor' => $actor->toArray(),
-                'target' => $target ? $target->toArray() : null,
+                'target' => $target?->toArray(), //TODO: mettre a jour la fonction toArray fromArray pour que le passage de Json a un objet Character fonctionne correctement et inversement.
             ],
         ];
     }

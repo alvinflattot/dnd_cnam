@@ -10,7 +10,7 @@
     "hpPotion": 1,
     "manaPotion": 2,
     "rapier": {
-      "range" : 0, /*1 pour long range*/
+      "range" : 0,
       "weight" : "light",
       "damage": 4
     }

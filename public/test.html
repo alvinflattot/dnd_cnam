@@ -5,6 +5,7 @@
     <title>Test Actions D&D 5e (Stateless)</title>
     <style>
         body {
+            width: 100vw;
             font-family: sans-serif;
             max-width: 600px;
             margin: 2rem auto;
@@ -36,6 +37,7 @@
             height: 12em;
             font-family: monospace;
         }
+
     </style>
 </head>
 <body>
@@ -114,30 +116,12 @@
     </form>
     <pre id="action-result"></pre>
 </fieldset>
-<script>
-    window.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const res = await fetch('/src/Characters/Users/Aragorn.json');
-            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
-            const data = await res.json();
-            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
-        } catch (e) {
-            alert('Erreur lors du chargement de Aragorn.json : ' + e.message);
-        }
-    });
 
-    document.getElementById('action-type').addEventListener('change', function() {
-        if (this.value === 'reposCourt') {
-            document.getElementById('action-params').value = JSON.stringify({ mode: 'court' }, null, 2);
-            document.getElementById('action-target').value = document.getElementById('action-actor').value;
-        } else if (this.value === 'reposLong') {
-            document.getElementById('action-params').value = JSON.stringify({ mode: 'long' }, null, 2);
-            document.getElementById('action-target').value = document.getElementById('action-actor').value;
-        }
-    });
-</script>
 <script>
     const resultDiv = document.getElementById('action-result');
+    const actorDiv = document.getElementById('action-actor');
+    const targetDiv = document.getElementById('action-target');
+    const paramsDiv = document.getElementById('action-params');
 
     document.getElementById('action-form').addEventListener('submit', async e => {
         e.preventDefault();
@@ -181,8 +165,8 @@
             .then(data => {
                 console.log('Réponse JSON du serveur:', data);
                 resultDiv.textContent = JSON.stringify(data.events, null, 2);
-                document.getElementById('action-actor').value = JSON.stringify(data.result.actor, null, 2);
-                document.getElementById('action-target').value = JSON.stringify(data.result.target, null, 2);
+                actorDiv.value = JSON.stringify(data.result.actor, null, 2);
+                targetDiv.value = JSON.stringify(data.result.target, null, 2);
                 resultDiv.style.color = "green";
             })
             .catch(err => {
@@ -190,6 +174,30 @@
                 resultDiv.textContent = err;
                 resultDiv.style.color = "red";
             });
+    });
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            let res;
+            let data;
+
+            res = await fetch('prototypeData/Aragorn.json');
+            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            data = await res.json();
+            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+
+            res = await fetch('prototypeData/Aragorn.json');
+            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            data = await res.json();
+            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+
+            res = await fetch('prototypeData/Aragorn.json');
+            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            data = await res.json();
+            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+        } catch (e) {
+            alert('Erreur lors du chargement de Aragorn.json : ' + e.message);
+        }
     });
 </script>
 

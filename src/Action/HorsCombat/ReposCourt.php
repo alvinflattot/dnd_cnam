@@ -2,9 +2,10 @@
 
 namespace App\Action\HorsCombat;
 
+use App\Action\ActionInterface;
 use App\Model\Character;
 
-class ReposCourtAction implements ReposActionInterface
+class ReposCourt implements ActionInterface
 {
     public function execute(Character $actor, ?Character $target, array $params): array
     {
@@ -16,7 +17,7 @@ class ReposCourtAction implements ReposActionInterface
             'events' => $events,
             'result' => [
                 'actor' => $actor->toArray(),
-                'target' => $target ? $target->toArray() : null,
+                'target' => $target?->toArray(),
             ],
         ];
     }
