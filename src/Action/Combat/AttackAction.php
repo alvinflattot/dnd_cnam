@@ -18,6 +18,8 @@ class AttackAction implements ActionInterface
         $total = $params['attackRoll'] + $actorModifierBonus + $actor->getProficiencyBonus();
         $hit = $total >= $target->getArmorClass();
 
+        
+
         if ($hit) {
             $dmg = $params['damageRoll'] + $actorModifierBonus;
             $msg = "{$actor->getName()} touche {$target->getName()} (jet $total vs CA {$target->getArmorClass()}) pour $dmg dégâts.";

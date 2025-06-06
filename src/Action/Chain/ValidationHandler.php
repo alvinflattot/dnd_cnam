@@ -25,7 +25,7 @@ class ValidationHandler extends AbstractActionHandler
                 throw new Exception('Cible requise pour l\'attaque');
             }
             if ($target->getHp() < 0) {
-                throw new Exception("«{$target->getName()}» est déjà KO");
+                throw new Exception("« {$target->getName()} » est déjà KO");
             }
             if (!isset($context['attackRoll']) || !is_numeric($context['attackRoll']) || $context['attackRoll'] <= 0 || $context['attackRoll'] > 100) {
                 throw new Exception("Une valeur de dé d'attaque est invalide");
@@ -42,7 +42,7 @@ class ValidationHandler extends AbstractActionHandler
                 }
 
                 if (!$actor->hasItem($weaponToUse['name'])){
-                    throw new Exception("«{$actor->getName()}» le possède pas l'objet «{$weaponToUse['name']}»");
+                    throw new Exception("« {$actor->getName()} » le possède pas l'objet « {$weaponToUse['name']} »");
                 }
             }
         }
@@ -54,7 +54,7 @@ class ValidationHandler extends AbstractActionHandler
             }
 
             if (!$actor->hasItem($itemToUse)) {
-                throw new Exception("Le personnage ne possède pas l'objet « $itemToUse ».");
+                throw new Exception("« {$actor->getName()} » ne possède pas l'objet « $itemToUse ».");
             }
         }
 
