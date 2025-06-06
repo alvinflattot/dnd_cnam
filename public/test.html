@@ -5,20 +5,21 @@
     <title>Test Actions D&D 5e (Stateless)</title>
     <style>
         body {
-            width: 100vw;
             font-family: sans-serif;
-            max-width: 600px;
-            margin: 2rem auto;
+            padding: 0 2rem;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
         }
 
+
         fieldset {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
         }
 
         label {
             display: block;
-            margin: .5rem 0 .2rem;
+            /*margin: .5rem 0 .2rem;*/
         }
 
         input, textarea, button {
@@ -33,8 +34,13 @@
             overflow-x: auto;
         }
 
+        #charactersDiv textarea {
+            width: 300px;
+            margin: 0 .5rem;
+        }
+
         textarea {
-            height: 12em;
+            height: 30em;
             font-family: monospace;
         }
 
@@ -57,60 +63,23 @@
             <option value="reposLong">repos long</option>
         </select>
 
-        <label for="action-actor">Objet Character (acteur)</label>
-        <textarea id="action-actor" name="actor"></textarea>
+        <!-- div des caractères-->
+        <div id="charactersDiv" style="display: flex; justify-content:space-around">
+            <div>
+                <label for="action-actor">Objet Character (acteur)</label>
+                <textarea id="action-actor" name="actor"></textarea>
+            </div>
 
-        <label for="action-target">Objet Character (cible)</label>
-        <textarea id="action-target" name="target">
-{
-    "name": "goblin",
-    "hpMax": 12,
-    "hp": 7,
-    "armorClass": 15,
-    "level": 1,
-    "class": "thief",
-    "race": "Human",
-    "inventory": {
-        "hpPotion": 1,
-        "manaPotion": 2,
-        "rapier": 1
-    },
-    "statistics": {
-        "strength": 16,
-        "dexterity": 18,
-        "constitution": 14,
-        "intelligence": 10,
-        "wisdom": 12,
-        "charisma": 8
-    },
-    "skills": [
-        "Sneak Attack"
-    ]
-}
-        </textarea>
+            <div>
+                <label for="action-target">Objet Character (cible)</label>
+                <textarea id="action-target" name="target"></textarea>
+            </div>
+            <div>
+                <label for="action-params">Params (roll, attackRoll, damageRoll, itemToUse ...)</label>
+                <textarea id="action-params" name="params"></textarea>
+            </div>
+        </div>
 
-        <label for="action-params">Params (roll, attackRoll, damageRoll, itemToUse ...)</label>
-        <textarea id="action-params" name="params">
-{
-    "itemToUse": "hpPotion",
-    "weaponToUse": {
-        "name": "rapier",
-        "statistic": "dexterity",
-        "damage": 3
-    },
-    "attackRoll": 12,
-    "damageRoll": 6,
-    "location": "Forest",
-    "awardDifficulty": 20,
-    "treasureRoll": 30,
-    "listOfAwards": [
-        { "name": "Boost Strength",     "quantity": 15 },
-        { "name": "Gain Experience",    "quantity": 8  },
-        { "name": "Find Gold",          "quantity": 12 }
-    ]
-}
-
-        </textarea>
 
         <button type="submit">Lancer</button>
     </form>
@@ -184,19 +153,19 @@
             res = await fetch('prototypeData/Aragorn.json');
             if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
             data = await res.json();
-            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+            actorDiv.value = JSON.stringify(data, null, 2);
 
-            res = await fetch('prototypeData/Aragorn.json');
-            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            res = await fetch('prototypeData/Goblin.json');
+            if (!res.ok) throw new Error('Impossible de charger Goblin.json');
             data = await res.json();
-            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+            targetDiv.value = JSON.stringify(data, null, 2);
 
-            res = await fetch('prototypeData/Aragorn.json');
-            if (!res.ok) throw new Error('Impossible de charger Aragorn.json');
+            res = await fetch('prototypeData/params.json');
+            if (!res.ok) throw new Error('Impossible de charger params.json');
             data = await res.json();
-            document.getElementById('action-actor').value = JSON.stringify(data, null, 2);
+            paramsDiv.value = JSON.stringify(data, null, 2);
         } catch (e) {
-            alert('Erreur lors du chargement de Aragorn.json : ' + e.message);
+            alert('Erreur lors du chargement des données json : ' + e.message);
         }
     });
 </script>

@@ -197,11 +197,9 @@ class Character
     }
 
     function ajouterObjetInventaire(string $nomObjet, int $quantite = 1): void {
-        if (isset($this->inventaire[$nomObjet])) {
-            $this->inventaire[$nomObjet] += $quantite;
-        } else {
-            $this->inventaire[$nomObjet] = $quantite;
-        }
+        $inventory = $this->getInventory();
+        $inventory[$nomObjet] = ($inventory[$nomObjet] ?? 0) + $quantite;
+        $this->setInventory($inventory);
     }
 
     /**

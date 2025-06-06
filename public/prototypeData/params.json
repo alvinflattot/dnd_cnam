@@ -1,0 +1,18 @@
+{
+  "itemToUse": "hpPotion",
+  "weaponToUse": {
+    "name": "rapier",
+    "statistic": "dexterity",
+    "damage": 3
+  },
+  "attackRoll": 12,
+  "damageRoll": 6,
+  "location": "Forest",
+  "awardDifficulty": 20,
+  "treasureRoll": 30,
+  "listOfAwards": [
+    { "name": "Boost Strength",     "quantity": 15 },
+    { "name": "Gain Experience",    "quantity": 8  },
+    { "name": "Find Gold",          "quantity": 12 }
+  ]
+}
