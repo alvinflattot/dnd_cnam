@@ -9,7 +9,11 @@
   "inventory": {
     "hpPotion": 1,
     "manaPotion": 2,
-    "rapier": 1
+    "long sword": {
+      "range" : "short",
+      "weight": "heavy",
+      "damage": 10
+    }
   },
   "statistics": {
     "strength": 16,
