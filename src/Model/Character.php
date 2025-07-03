@@ -5,6 +5,8 @@ namespace App\Model;
 
 use Exception;
 
+//Prototype de la classe en attendant la vraie de l'équipe qui gère les personnages
+
 class Character
 {
     private string $name;

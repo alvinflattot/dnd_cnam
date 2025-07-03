@@ -1,2 +1,6 @@
-# dnd_cnam
-Projet donjon et dragon
+# Projet donjon et dragon
+
+Pour lancer la prototype 
+```php
+php -S localhost:8000
+```
