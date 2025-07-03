@@ -9,7 +9,7 @@ class ReposLong implements ActionInterface
 {
     public function execute(Character $actor, ?Character $target, array $params): array
     {
-        $staminaGain = $actor->getStaminaMax(); //TODO: implémenter les attributs et méthode lié a la stamina
+        $staminaGain = $actor->getStaminaMax();
         $hpGain = $actor->getHpMax();
         $events = [];
 
@@ -17,7 +17,7 @@ class ReposLong implements ActionInterface
         $actor->setStamina($staminaGain);
 
         // Réinitialisation des sorts
-        $spells = $actor->getSpells();
+        $spells = $actor->getSpells(); //TODO: implémenter les attributs et méthode lié aux spells
         foreach ($spells as $spell) {
             if (isset($spell['maxUse'])) {
                 $spell['remainingUse'] = $spell['maxUse'];

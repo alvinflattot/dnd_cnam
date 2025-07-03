@@ -1,6 +1,6 @@
 # Projet donjon et dragon
 
-Pour lancer la prototype 
+Pour lancer la prototype, faire la commande suivante : 
 ```php
-php -S localhost:8000
+php -S 127.0.0.1:8000
 ```

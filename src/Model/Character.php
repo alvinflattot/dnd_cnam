@@ -10,40 +10,44 @@ use Exception;
 class Character
 {
     private string $name;
-    private int $spellSlots;
     private int $hp;
     private int $hpMax;
+    private int $staminaMax;
+    private int $stamina;
     private int $level;
     private int $armorClass;
     private array $inventory;
     private array $statistics;
     private array $skills;
-    private array $status;
+    private array $spells = []; // prototype pour les sorts, à implémenter plus tard
+
 
     /**
      * @param string $name
-     * @param int $hp
      * @param int $hpMax
+     * @param int $hp
+     * @param int $staminaMax
+     * @param int $stamina
      * @param int $armorClass
      * @param int $level
      * @param array $statistics
      * @param array $inventory
      * @param array $skills
-     * @param array $status
-     * @param int $spellSlots
+     * @param array $spells
      */
-    public function __construct(string $name, int $hpMax, int $hp, int $armorClass, int $level, array $statistics = [], array $inventory = [], array $skills = [], array $status = [], int $spellSlots = 0)
+    public function __construct(string $name, int $hpMax, int $hp, int $staminaMax, int $stamina, int $armorClass, int $level, array $inventory = [], array $spells = [], array $statistics = [], array $skills = [])
     {
         $this->setName($name);
         $this->setHpMax($hpMax);
         $this->setHp($hp);
+        $this->setStaminaMax($staminaMax);
+        $this->setStamina($stamina);
         $this->setArmorClass($armorClass);
         $this->setLevel($level);
-        $this->setStatistics($statistics);
         $this->setInventory($inventory);
+        $this->setSpells($spells);
+        $this->setStatistics($statistics);
         $this->setSkills($skills);
-        $this->setStatus($status);
-        $this->setSpellSlots($spellSlots);
     }
 
     public static function fromArray(array $data): self
@@ -52,13 +56,14 @@ class Character
             $data['name'],
             $data['hpMax'],
             $data['hp'],
+            $data['staminaMax'],
+            $data['stamina'],
             $data['armorClass'],
             $data['level'],
-            $data['statistics'],
             $data['inventory'] ?? [],
+            $data['spells'] ?? [],
+            $data['statistics'],
             $data['skills'] ?? [],
-            $data['status'] ?? [],
-            $data['spellSlot'] ?? 0
         );
     }
 
@@ -68,16 +73,16 @@ class Character
             'name' => $this->getName(),
             'hpMax' => $this->getHpMax(),
             'hp' => $this->getHp(),
+            'staminaMax' => $this->getStaminaMax(),
+            'stamina' => $this->getStamina(),
             'armorClass' => $this->getArmorClass(),
             'level' => $this->getLevel(),
-            'statistics' => $this->getStatistics(),
-            'spellSlots' => $this->getSpellSlots(),
             'inventory' => $this->getInventory(),
+            'spells' => $this->getSpells(),
+            'statistics' => $this->getStatistics(),
             'skills' => $this->getSkills(),
-            'status' => $this->getStatus(),
         ];
     }
-
 
     public function getName(): string
     {
@@ -87,16 +92,6 @@ class Character
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function getSpellSlots(): int
-    {
-        return $this->spellSlots;
-    }
-
-    public function setSpellSlots(int $spellSlots): void
-    {
-        $this->spellSlots = $spellSlots;
     }
 
     public function getHp(): int
@@ -117,6 +112,26 @@ class Character
     public function setHpMax(int $hpMax): void
     {
         $this->hpMax = $hpMax;
+    }
+
+    public function getStaminaMax(): int
+    {
+        return $this->staminaMax;
+    }
+
+    public function setStaminaMax(int $staminaMax): void
+    {
+        $this->staminaMax = $staminaMax;
+    }
+
+    public function getStamina(): int
+    {
+        return $this->stamina;
+    }
+
+    public function setStamina(int $stamina): void
+    {
+        $this->stamina = $stamina;
     }
 
     public function getLevel(): int
@@ -169,16 +184,15 @@ class Character
         $this->skills = $skills;
     }
 
-    public function getStatus(): array
+    public function getSpells(): array
     {
-        return $this->status;
+        return $this->spells;
     }
 
-    public function setStatus(array $status): void
+    public function setSpells(array $spells): void
     {
-        $this->status = $status;
+        $this->spells = $spells;
     }
-
 
     /**
      *
@@ -198,7 +212,8 @@ class Character
         $this->setInventory($inventory);
     }
 
-    function ajouterObjetInventaire(string $nomObjet, int $quantite = 1): void {
+    function ajouterObjetInventaire(string $nomObjet, int $quantite = 1): void
+    {
         $inventory = $this->getInventory();
         $inventory[$nomObjet] = ($inventory[$nomObjet] ?? 0) + $quantite;
         $this->setInventory($inventory);

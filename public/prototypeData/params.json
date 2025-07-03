@@ -9,10 +9,5 @@
   "damageRoll": 6,
   "location": "Forest",
   "awardDifficulty": 20,
-  "treasureRoll": 30,
-  "listOfAwards": [
-    { "name": "Boost Strength",     "quantity": 15 },
-    { "name": "Gain Experience",    "quantity": 8  },
-    { "name": "Find Gold",          "quantity": 12 }
-  ]
+  "treasureRoll": 30
 }

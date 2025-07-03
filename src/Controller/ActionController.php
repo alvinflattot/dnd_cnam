@@ -21,6 +21,7 @@ class ActionController
 
         $chain = new ValidationHandler();
         $chain->setNext(new ExecutionHandler())
+
             ->setNext(new EventDispatchHandler());
 
         $output = $chain->handle(

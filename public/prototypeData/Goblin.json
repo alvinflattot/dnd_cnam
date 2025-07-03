@@ -1,7 +1,9 @@
 {
   "name": "goblin",
-  "hp": 7,
   "hpMax": 12,
+  "hp": 7,
+  "staminaMax": 7,
+  "stamina": 7,
   "armorClass": 15,
   "level": 1,
   "class": "thief",
